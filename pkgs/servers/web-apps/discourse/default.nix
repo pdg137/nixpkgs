@@ -226,9 +226,7 @@ let
       nodePackages.terser
       nodePackages.patch-package
       yarn
-      nodejs_18
-      jq
-      moreutils
+      nodejs_16
       esbuild
     ];
 
