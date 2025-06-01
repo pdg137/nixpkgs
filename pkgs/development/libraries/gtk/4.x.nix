@@ -130,7 +130,7 @@ stdenv.mkDerivation (finalAttrs: {
     ]
     ++ [
       gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-bad
+#      gst_all_1.gst-plugins-bad
       fribidi
       harfbuzz
     ]
