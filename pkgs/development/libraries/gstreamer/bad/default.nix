@@ -108,7 +108,7 @@
   gst-plugins-bad,
   apple-sdk_gstreamer,
 }:
-
+assert false;
 stdenv.mkDerivation (finalAttrs: {
   pname = "gst-plugins-bad";
   version = "1.26.0";
