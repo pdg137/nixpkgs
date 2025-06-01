@@ -19,7 +19,7 @@
 }:
 
 let
-  inherit (gst_all_1) gstreamer gst-plugins-base gst-plugins-bad;
+  inherit (gst_all_1) gstreamer gst-plugins-base;
 in
 stdenv.mkDerivation rec {
   pname = "gtkd";
@@ -61,10 +61,6 @@ stdenv.mkDerivation rec {
     substituteInPlace generated/gstreamer/gst/base/c/functions.d \
       --replace libgstbase-1.0.so.0 ${gstreamer.out}/lib/libgstbase-1.0.so.0 \
       --replace libgstbase-1.0.0.dylib ${gstreamer.out}/lib/libgstbase-1.0.0.dylib
-
-    substituteInPlace generated/gstreamer/gst/mpegts/c/functions.d \
-      --replace libgstmpegts-1.0.so.0 ${gst-plugins-bad.out}/lib/libgstmpegts-1.0.so.0 \
-      --replace libgstmpegts-1.0.0.dylib ${gst-plugins-bad.out}/lib/libgstmpegts-1.0.0.dylib
 
     substituteInPlace generated/gstreamer/gstinterfaces/c/functions.d \
       --replace libgstvideo-1.0.so.0 ${gst-plugins-base}/lib/libgstvideo-1.0.so.0 \

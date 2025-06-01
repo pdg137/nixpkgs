@@ -25,10 +25,10 @@ mkXfceDerivation {
   buildInputs = with gst_all_1; [
     dbus
     dbus-glib
-    gst-plugins-bad
+#    gst-plugins-bad
     gst-plugins-base
     gst-plugins-good
-    gst-plugins-ugly
+#    gst-plugins-ugly
     gtk3
     libnotify
     libX11

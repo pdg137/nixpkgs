@@ -144,9 +144,9 @@ stdenv.mkDerivation (
             gstreamer
             gst-plugins-base
             gst-plugins-good
-            gst-plugins-ugly
+#            gst-plugins-ugly
             gst-libav
-            gst-plugins-bad
+#            gst-plugins-bad
           ]
         )
         ++ lib.optionals gtkSupport [

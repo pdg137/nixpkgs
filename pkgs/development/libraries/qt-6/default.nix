@@ -136,7 +136,7 @@ let
       qtmultimedia = callPackage ./modules/qtmultimedia {
         inherit (gst_all_1)
           gstreamer
-          gst-plugins-bad
+#          gst-plugins-bad
           gst-plugins-base
           gst-plugins-good
           gst-libav

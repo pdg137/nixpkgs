@@ -10,7 +10,7 @@
   pkg-config,
   alsa-lib,
   gstreamer,
-  gst-plugins-bad,
+#  gst-plugins-bad,
   gst-plugins-base,
   gst-plugins-good,
   gst-libav,
@@ -55,7 +55,7 @@ qtModule {
     ++ lib.optionals (!stdenv.hostPlatform.isMinGW) [ qtquick3d ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       gstreamer
-      gst-plugins-bad
+#      gst-plugins-bad
       gst-plugins-base
       gst-plugins-good
       gst-libav
