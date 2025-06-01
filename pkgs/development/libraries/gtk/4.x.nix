@@ -55,6 +55,7 @@
   broadwaySupport ? true,
   testers,
   darwinMinVersionHook,
+  cmake,
 }:
 
 let
@@ -130,7 +131,9 @@ stdenv.mkDerivation (finalAttrs: {
     ]
     ++ [
       gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-bad
+      gst_all_1.gstreamer
+      cmake
+#      gst_all_1.gst-plugins-bad
       fribidi
       harfbuzz
     ]
