@@ -21,7 +21,7 @@ in
 
   gst-plugins-good = callPackage ./good { };
 
-  gst-plugins-bad = callPackage ./bad { };
+  gst-plugins-bad = assert false; callPackage ./bad { };
 
   gst-plugins-ugly = callPackage ./ugly { };
 
