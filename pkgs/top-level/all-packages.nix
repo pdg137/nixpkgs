@@ -11409,6 +11409,8 @@ with pkgs;
 
   jackmix_jack1 = jackmix.override { jack = jack1; };
 
+  js8call-improved = qt5.callPackage ../applications/radio/js8call-improved { };
+
   js8call = qt5.callPackage ../applications/radio/js8call { };
 
   jwm = callPackage ../applications/window-managers/jwm { };
