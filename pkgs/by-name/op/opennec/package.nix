@@ -11,13 +11,14 @@
 
 stdenv.mkDerivation (finalAttrs: rec {
   pname = "OpenNEC";
-  version = "1.2.0";
+  version = "1.2.1";
 
   src = fetchFromGitHub {
     owner = "maurymarkowitz";
     repo = "OpenNEC";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-Cue0i9tT+7tEAX+WAGp5HkZ5jC3LNqs2+ySK8z3e1Z4=";
+    # tag = "v${finalAttrs.version}";
+    rev = "cc709f6243f6fefde1dc9b8205cf3895045e8cc4";
+    hash = "sha256-leAk1Gy3V5vMqRmv9WTMglJBZdUWBflzaAeVccueZ/g=";
   };
 
   # BUILD.md says "use OpenBLAS for best performance".  It is supposed
@@ -46,10 +47,27 @@ stdenv.mkDerivation (finalAttrs: rec {
 
   passthru.tests = {
     simple = runCommand "${pname}-test" { } ''
+      set -e
       cp -r ${src}/ src
       chmod -R u+w src
-      ${opennec}/bin/onec ${src}/test/example5.deck -o example5.out
-      touch $out
+      pass=1
+      for file in `find ${src}/test/ -name '*.nec' -or -name '*.deck'`
+      do
+        echo Testing $file...
+        if ${opennec}/bin/onec $file -o `basename $file`.out
+        then
+          pass=0
+          echo FAIL
+          echo
+        else
+          echo PASS
+          echo
+        fi
+      done
+      if [ $pass -eq 1 ]
+      then
+        touch $out
+      fi
     '';
   };
 
