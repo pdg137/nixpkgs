@@ -62,6 +62,11 @@ let
     rev = "7bd3ae2401fcba58e314755576a2940085835312";
     hash = "sha256-WVYKvttiNh6uEzw0b27winyDfzzGkEEhYq7DIwfZW74=";
   };
+  freedvPython = python3.withPackages (ps: [
+    ps.numpy
+    ps.torch
+    ps.matplotlib
+  ]);
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "freedv";
@@ -113,7 +118,8 @@ stdenv.mkDerivation (finalAttrs: {
     libtool
     cmake
     pkg-config
-    python3
+    makeWrapper
+    freedvPython
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     (macdylibbundler.overrideAttrs {
@@ -123,7 +129,6 @@ stdenv.mkDerivation (finalAttrs: {
           --replace-fail "--deep --preserve-metadata=entitlements,requirements,flags,runtime" ""
       '';
     })
-    makeWrapper
     darwin.autoSignDarwinBinariesHook
     darwin.sigtool
   ];
@@ -136,7 +141,7 @@ stdenv.mkDerivation (finalAttrs: {
     speexdsp
     hamlib_4
     wxwidgets_3_2
-    python3.pkgs.numpy
+    freedvPython
   ]
   ++ (
     if stdenv.hostPlatform.isLinux then
@@ -167,6 +172,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   postInstall = ''
     install -Dm755 rade_build/src/librade.* -t $out/lib
+  ''
+  + lib.optionalString stdenv.hostPlatform.isLinux ''
+    install -d $out/share/freedv
+    cp -R rade_src/radae $out/share/freedv/
+    cp rade_src/radae_txe.py rade_src/radae_rxe.py $out/share/freedv/
+    cp -R rade_src/model19_check3 $out/share/freedv/
+    wrapProgram $out/bin/freedv \
+      --run "cd $out/share/freedv" \
+      --prefix PYTHONPATH : "$out/share/freedv:${freedvPython}/${python3.sitePackages}" \
+      --set PYTHONHOME "${freedvPython}"
   ''
   + lib.optionalString stdenv.hostPlatform.isDarwin ''
     mkdir -p $out/Applications
